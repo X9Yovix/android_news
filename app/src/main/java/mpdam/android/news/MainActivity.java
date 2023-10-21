@@ -1,12 +1,15 @@
 package mpdam.android.news;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -28,30 +31,40 @@ public class MainActivity extends AppCompatActivity {
     private NewsRecyclerAdapter adapter;
     private LinearProgressIndicator progressIndicator;
 
+    private SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressIndicator= findViewById(R.id.progress_bar);
+        progressIndicator = findViewById(R.id.progress_bar);
         newsAnimeRv = findViewById(R.id.newsAnimeRV);
+        searchView = findViewById(R.id.search_view);
+
+        EditText theTextArea = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+
+        theTextArea.setTextColor(Color.WHITE);
 
         setupRecyclerView();
-        getLatestAnimes();
+
+        String latestAnimes = "/seasons/now";
+        getAnimes(latestAnimes);
+        userSearching();
     }
 
-    public void changeStateProgressBar(boolean v){
-        if(v){
+    public void changeStateProgressBar(boolean v) {
+        if (v) {
             progressIndicator.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             progressIndicator.setVisibility(View.INVISIBLE);
         }
     }
-    public void getLatestAnimes(){
-        changeStateProgressBar(true);
-        String latestAnimes = "https://api.jikan.moe/v4/seasons/now";
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, latestAnimes, null, new Response.Listener<JSONObject>() {
+    public void getAnimes(String query) {
+        changeStateProgressBar(true);
+        String url = "https://api.jikan.moe/v4"+ query;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -89,14 +102,30 @@ public class MainActivity extends AppCompatActivity {
 
         Volley.newRequestQueue(this).add(request);
     }
-    public void setupRecyclerView(){
-        newsAnimeRv.setLayoutManager( new LinearLayoutManager(this));
+
+    public void setupRecyclerView() {
+        newsAnimeRv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new NewsRecyclerAdapter(animeList);
         newsAnimeRv.setAdapter(adapter);
     }
 
-    public void updateRecyclerView(List<Anime> animeL){
+    public void updateRecyclerView(List<Anime> animeL) {
         this.animeList.clear();
         this.animeList.addAll(animeL);
+    }
+
+    public void userSearching() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String url = "/anime?q=" + query;
+                getAnimes(url);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 }
