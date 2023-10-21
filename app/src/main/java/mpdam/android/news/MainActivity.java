@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private TextView titleRelatedToNews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         newsAnimeRv = findViewById(R.id.newsAnimeRV);
         searchView = findViewById(R.id.search_view);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        titleRelatedToNews = findViewById(R.id.titleRelatedToNewsTV);
 
         EditText theTextArea = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
 
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         String latestAnimes = "/seasons/now";
         getAnimes(latestAnimes);
+        setTitleRelatedToNews("Latest anime");
         userSearching();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
                 String latestAnimes = "/seasons/now";
                 getAnimes(latestAnimes);
+                setTitleRelatedToNews("Latest anime");
             }
         });
     }
@@ -130,6 +136,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 String url = "/anime?q=" + query;
                 getAnimes(url);
+                setTitleRelatedToNews(query);
+                searchView.setQuery("",false);
+                searchView.clearFocus();
                 return true;
             }
 
@@ -138,5 +147,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void setTitleRelatedToNews(String text){
+        String firstLetter = text.substring(0, 1).toUpperCase();
+        String restOfText = text.substring(1).toLowerCase();
+        String capitalizedText = firstLetter + restOfText;
+        titleRelatedToNews.setText(capitalizedText);
     }
 }
