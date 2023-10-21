@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
     android:background="@color/purple"
-    >
+    tools:context=".SplashActivity">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/baseline_newspaper_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,10 +24,11 @@
         android:id="@+id/textLogo"
         android:layout_width="200dp"
         android:layout_height="40dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
         android:text="@string/app_real_name"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

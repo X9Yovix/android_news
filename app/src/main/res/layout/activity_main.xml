@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
     android:background="@color/purple"
-    >
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/app_titleTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_real_name"
-        android:gravity="center"
         android:layout_marginTop="10dp"
-        android:textSize="40sp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:text="@string/app_real_name"
         android:textColor="@color/orange"
-        />
+        android:textSize="40sp" />
+
     <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:id="@+id/progress_bar" />
+        android:indeterminate="true" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newsAnimeRV" />
+        android:id="@+id/newsAnimeRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
