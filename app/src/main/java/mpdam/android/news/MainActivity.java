@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Anime> animeList = new ArrayList<>();
     private NewsRecyclerAdapter adapter;
     private LinearProgressIndicator progressIndicator;
-
     private SearchView searchView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         progressIndicator = findViewById(R.id.progress_bar);
         newsAnimeRv = findViewById(R.id.newsAnimeRV);
         searchView = findViewById(R.id.search_view);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
         EditText theTextArea = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
 
@@ -51,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
         String latestAnimes = "/seasons/now";
         getAnimes(latestAnimes);
         userSearching();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                String latestAnimes = "/seasons/now";
+                getAnimes(latestAnimes);
+            }
+        });
     }
 
     public void changeStateProgressBar(boolean v) {
@@ -63,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void getAnimes(String query) {
         changeStateProgressBar(true);
-        String url = "https://api.jikan.moe/v4"+ query;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
+        String url = "https://api.jikan.moe/v4" + query;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -122,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 getAnimes(url);
                 return true;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;

@@ -15,14 +15,15 @@ import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.NewsViewHolder> {
     private List<Anime> animeList;
-    public NewsRecyclerAdapter(List<Anime> animeList){
-        this.animeList=animeList;
+
+    public NewsRecyclerAdapter(List<Anime> animeList) {
+        this.animeList = animeList;
     }
 
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_recycler_row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_recycler_row, parent, false);
         return new NewsViewHolder(view);
     }
 
@@ -42,18 +43,18 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         return this.animeList.size();
     }
 
-    class NewsViewHolder extends RecyclerView.ViewHolder{
+    class NewsViewHolder extends RecyclerView.ViewHolder {
 
-         private ImageView articleImage;
-         private TextView articleTitle;
-         private TextView articleDescription;
+        private ImageView articleImage;
+        private TextView articleTitle;
+        private TextView articleDescription;
 
-         public NewsViewHolder(@NonNull View itemView) {
-             super(itemView);
+        public NewsViewHolder(@NonNull View itemView) {
+            super(itemView);
 
-             articleImage = itemView.findViewById(R.id.articleImageIV);
-             articleTitle = itemView.findViewById(R.id.articleTitleTV);
-             articleDescription = itemView.findViewById(R.id.articleDescriptionTV);
-         }
-     }
+            articleImage = itemView.findViewById(R.id.articleImageIV);
+            articleTitle = itemView.findViewById(R.id.articleTitleTV);
+            articleDescription = itemView.findViewById(R.id.articleDescriptionTV);
+        }
+    }
 }
