@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "mpdam.android.news"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "mpdam.android.news"
