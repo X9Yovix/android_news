@@ -89,11 +89,13 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < dataArray.length(); i++) {
 
                         JSONObject animeObject = dataArray.getJSONObject(i);
+                        long id = animeObject.getLong("mal_id");
                         String title = animeObject.getString("title");
                         String imageUrl = animeObject.getJSONObject("images").getJSONObject("jpg").getString("image_url");
                         String description = animeObject.getString("synopsis");
 
                         Anime anime = new Anime();
+                        anime.setId(id);
                         anime.setTitle(title);
                         anime.setImageUrl(imageUrl);
                         anime.setDescription(description);

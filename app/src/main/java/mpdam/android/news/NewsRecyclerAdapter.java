@@ -1,5 +1,6 @@
 package mpdam.android.news;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,15 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 .into(holder.articleImage);
         holder.articleTitle.setText(anime.getTitle());
         holder.articleDescription.setText(anime.getDescription());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),NewsDetailActivity.class);
+                intent.putExtra("ANIME_ID",String.valueOf(anime.getId()));
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

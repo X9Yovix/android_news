@@ -1,19 +1,27 @@
 package mpdam.android.news;
 
 public class Anime {
+    private long id;
     private String title;
     private String imageUrl;
-
-
     private String description;
 
     public Anime() {
     }
 
-    public Anime(String title, String imageUrl, String description) {
+    public Anime(long id, String title, String imageUrl, String description) {
+        this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;
         this.description = description;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -43,7 +51,8 @@ public class Anime {
     @Override
     public String toString() {
         return "Anime{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", description='" + description + '\'' +
                 '}';
