@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 String url = "/anime?q=" + query;
                 getAnimes(url);
                 setTitleRelatedToNews(query);
-                searchView.setQuery("",false);
+                searchView.setQuery("", false);
                 searchView.clearFocus();
                 return true;
             }
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void setTitleRelatedToNews(String text){
+    public void setTitleRelatedToNews(String text) {
         String firstLetter = text.substring(0, 1).toUpperCase();
         String restOfText = text.substring(1).toLowerCase();
         String capitalizedText = firstLetter + restOfText;

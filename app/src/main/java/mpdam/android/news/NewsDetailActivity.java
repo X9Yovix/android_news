@@ -42,7 +42,9 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     private ImageView returnIv;
 
-    private TextView statusAnime,episodesAnime,durationAnime;
+    private TextView statusAnime, episodesAnime, durationAnime;
+
+    private String animeID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +58,17 @@ public class NewsDetailActivity extends AppCompatActivity {
         synopsis = findViewById(R.id.synopsisTV);
         trailerIv = findViewById(R.id.trailerIV);
         playVideoBtn = findViewById(R.id.playVideoBtn);
-        returnIv= findViewById(R.id.returnIV);
-        statusAnime= findViewById(R.id.statusAnimeTV);
-        episodesAnime= findViewById(R.id.episodesAnimeTV);
-        durationAnime= findViewById(R.id.durationAnimeTV);
+        returnIv = findViewById(R.id.returnIV);
+        statusAnime = findViewById(R.id.statusAnimeTV);
+        episodesAnime = findViewById(R.id.episodesAnimeTV);
+        durationAnime = findViewById(R.id.durationAnimeTV);
 
-        String animeID = getIntent().getStringExtra("ANIME_ID");
+        this.animeID = getIntent().getStringExtra("ANIME_ID");
         getAnime(animeID);
         returnHome();
     }
 
-    private void returnHome(){
+    private void returnHome() {
         returnIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +78,7 @@ public class NewsDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getAnime(String id) {
         String url = "https://api.jikan.moe/v4/anime/" + id + "/full";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -155,7 +158,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                     playVideoBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showVideoPlaybackOptions(trailerUrl,trailerID);
+                            showVideoPlaybackOptions(trailerUrl, trailerID);
                         }
                     });
                 } catch (JSONException e) {
@@ -172,7 +175,8 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         Volley.newRequestQueue(this).add(request);
     }
-    private void showVideoPlaybackOptions(String trailerUrl,String trailerID) {
+
+    private void showVideoPlaybackOptions(String trailerUrl, String trailerID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Playback Option");
 
@@ -194,6 +198,10 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     private void launchVideoInApp(String videoUrl) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("VIDEO_URL", videoUrl);
+        intent.putExtra("ANIME_ID", this.animeID);
+        startActivity(intent);
     }
 
     private void openVideoInYouTube(String youtubeVideoId) {
@@ -201,7 +209,8 @@ public class NewsDetailActivity extends AppCompatActivity {
             Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + youtubeVideoId));
             startActivity(youtubeIntent);
         } catch (ActivityNotFoundException e) {
-            System.out.println(e.getMessage());
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + youtubeVideoId));
+            startActivity(intent);
         }
     }
 }
