@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">News</string>
     <string name="app_real_name">Anime News</string>
+    <string name="streaming_platforms">Streaming Platforms</string>
+    <string name="score">Score</string>
+    <string name="users">users</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="video_trailer">Video trailer</string>
+    <string name="status">Status</string>
+    <string name="episodes">Episodes</string>
+    <string name="duration">Duration</string>
+
+
 </resources>
